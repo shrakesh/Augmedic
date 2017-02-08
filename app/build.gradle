@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+
+def VUFORIA_SDK_DIR = '../../../vuforia-sdk'
+def NATIVE_LIB_DIR = 'build/lib'
+def JAR_DIR = 'build/java/vuforia'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "24.0.2"
+
+    sourceSets.main {
+        jni.srcDirs = []
+        jniLibs.srcDir "$VUFORIA_SDK_DIR/$NATIVE_LIB_DIR/"
+    }
+
+    defaultConfig {
+        applicationId "com.meditext.rakesh.meditext"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    archivesBaseName = rootProject.projectDir.getName()
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            ndk {
+                abiFilters "armeabi-v7a"
+            }
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+            ndk {
+                abiFilters "armeabi-v7a"
+            }
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+   // compile files("$VUFORIA_SDK_DIR/$JAR_DIR/Vuforia.jar")
+}
