@@ -73,6 +73,13 @@
             android:launchMode="singleTask"
             >
         </activity>
+        <activity
+            android:name=".MediView"
+            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize"
+            android:theme="@style/AppTheme"
+            android:launchMode="singleTask"
+            >
+        </activity>
     </application>
 
 </manifest>

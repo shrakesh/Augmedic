@@ -438,7 +438,7 @@ public class TextRecoRenderer implements GLSurfaceView.Renderer
             
             // We split the screen into 100 bins so that words on a line 
             // are roughly kept together.
-            int bins = viewportSize_y/100;
+            int bins = viewportSize_y/1;
             if(bins == 0)
             {
                 // Not expected, but should make sure we don't divide by 0.

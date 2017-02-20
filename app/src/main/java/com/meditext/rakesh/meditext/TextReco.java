@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -38,6 +39,8 @@ import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -322,7 +325,7 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
             CameraDevice.MODE.MODE_DEFAULT);
         VideoBackgroundConfig config = Renderer.getInstance()
             .getVideoBackgroundConfig();
-        
+
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int screenWidth = metrics.widthPixels;
@@ -446,32 +449,50 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
             
             public void run()
             {
-                RelativeLayout wordListLayout = (RelativeLayout) mUILayout
-                    .findViewById(R.id.wordList);
-                wordListLayout.removeAllViews();
+           //     RelativeLayout wordListLayout = (RelativeLayout) mUILayout
+           //         .findViewById(R.id.wordList);
+            //    wordListLayout.removeAllViews();
                 
                 if (words.size() > 0)
                 {
-                    LayoutParams params = wordListLayout.getLayoutParams();
+                 //   LayoutParams params = wordListLayout.getLayoutParams();
                     // Changes the height and width to the specified *pixels*
-                    int maxTextHeight = params.height - (2 * WORDLIST_MARGIN);
+               //     int maxTextHeight = params.height - (2 * WORDLIST_MARGIN);
                     
-                    int[] textInfo = fontSizeForTextHeight(maxTextHeight,
-                        words.size(), params.width, 32, 12);
+                //    int[] textInfo = fontSizeForTextHeight(maxTextHeight,
+                  //      words.size(), params.width, 32, 12);
                     
                     int count = -1;
-                    int nbWords = textInfo[2]; // number of words we can display
-                    TextView previousView = null;
-                    TextView tv;
+                    int nbWords = 1; // number of words we can display
+                    //TextView previousView = null;
+               //     WebView previousView = null;
+               //     TextView tv;
+               //     WebView  wv;
                     for (WordDesc word : words)
                     {
                         count++;
-                        if (count == nbWords)
+                        if (count == nbWords || count == 1 )
                         {
                             break;
                         }
+
+                        Intent intent = new Intent(TextReco.this,
+                                MediView.class);
+                        intent.putExtra("value", word.text);
+                        startActivity(intent);
+/*
+                        wv = new WebView(TextReco.this);
+                        wv.getSettings().setJavaScriptEnabled(true);
+                        wv.loadUrl("http://www.facebook.com");
+
+
                         tv = new TextView(TextReco.this);
-                        tv.setText(word.text);
+                        tv.setSingleLine(false);
+                        tv.setText("your medicine:" + word.text);
+                        tv.append(" \n usage: Combiflam Tablet is used for the treatment, control, prevention, & improvement of the following diseases, conditions and symptoms");
+                        tv.append(" \n 1. Fever\n 2. Cold \n 3. Headache \n 4. Pain in body \n 5. Joint Pain ");
+                        tv.append("\n side effects: The following is a list of possible side effects that may occur from all constituting ingredients of Combiflam Tablet. ");
+                        tv.append("\n 1. Abdominal \n 2. Constipation \n 3. Liver Damage ");
                         RelativeLayout.LayoutParams txtParams = new RelativeLayout.LayoutParams(
                             LayoutParams.MATCH_PARENT,
                             LayoutParams.WRAP_CONTENT);
@@ -483,22 +504,35 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
                         txtParams.setMargins(0, (count == 0) ? WORDLIST_MARGIN
                             : 0, 0, (count == (nbWords - 1)) ? WORDLIST_MARGIN
                             : 0);
-                        tv.setLayoutParams(txtParams);
-                        tv.setGravity(Gravity.CENTER_VERTICAL
-                            | Gravity.CENTER_HORIZONTAL);
-                        tv.setTextSize(textInfo[0]);
-                        tv.setTextColor(Color.WHITE);
-                        tv.setHeight(textInfo[1]);
+
+                        wv.setLayoutParams(txtParams);
+                        //wv.setGravity(Gravity.CENTER_VERTICAL);
+                        //tv.setLayoutParams(txtParams);
+                        //tv.setGravity(Gravity.CENTER_VERTICAL);
+                     //       | Gravity.CENTER_HORIZONTAL);
+                   //     tv.setTextSize(textInfo[0]);
+                        tv.setTextColor(Color.GREEN);
+                     //   tv.setHeight(textInfo[1]);
                         tv.setId(count + 100);
                         
-                        wordListLayout.addView(tv);
-                        previousView = tv;
+                        //wordListLayout.addView(tv);
+                        //previousView = tv;
+                        wordListLayout.addView(wv);
+                        previousView = wv;*/
                     }
                 }
             }
         });
     }
-    
+
+    private class MyBrowser extends WebViewClient
+    {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+    }
     
     private void showLoupe(boolean isActive)
     {
@@ -543,10 +577,10 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
         
         ImageView loupeArea = (ImageView) mUILayout.findViewById(R.id.loupe);
         
-        RelativeLayout wordListLayout = (RelativeLayout) mUILayout
-            .findViewById(R.id.wordList);
+      //  RelativeLayout wordListLayout = (RelativeLayout) mUILayout
+      //      .findViewById(R.id.wordList);
         
-        wordListLayout.setBackgroundColor(COLOR_OPAQUE);
+      //  wordListLayout.setBackgroundColor(COLOR_OPAQUE);
         
         if (isActive)
         {
@@ -569,18 +603,18 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
             loupeArea.getLayoutParams().width = loupeWidth;
             loupeArea.getLayoutParams().height = loupeHeight;
             loupeArea.setVisibility(View.VISIBLE);
-            
+           /*
             params = (RelativeLayout.LayoutParams) wordListLayout
                 .getLayoutParams();
             params.height = wordListHeight;
             params.width = width;
             wordListLayout.setLayoutParams(params);
-            
+            */
             loadingIndicator.setVisibility(View.GONE);
             loupeArea.setVisibility(View.VISIBLE);
             topMargin.setVisibility(View.VISIBLE);
             loupeLayout.setVisibility(View.VISIBLE);
-            wordListLayout.setVisibility(View.VISIBLE);
+     //       wordListLayout.setVisibility(View.VISIBLE);
             
         } else
         {
@@ -588,12 +622,12 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
             loupeArea.setVisibility(View.GONE);
             topMargin.setVisibility(View.GONE);
             loupeLayout.setVisibility(View.GONE);
-            wordListLayout.setVisibility(View.GONE);
+         //   wordListLayout.setVisibility(View.GONE);
         }
-        
+
     }
-    
-    
+
+
     // the funtions returns 3 values in an array of ints
     // [0] : the text size
     // [1] : the text component height
@@ -601,7 +635,7 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
     private int[] fontSizeForTextHeight(int totalTextHeight, int nbWords,
         int textWidth, int textSizeMax, int textSizeMin)
     {
-        
+
         int[] result = new int[3];
         String text = "Agj";
         TextView tv = new TextView(this);
@@ -613,9 +647,9 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
         // tv.setHeight(textHeight);
         int textSize = 0;
         int layoutHeight = 0;
-        
+
         final float densityMultiplier = getResources().getDisplayMetrics().density;
-        
+
         for (textSize = textSizeMax; textSize >= textSizeMin; textSize -= 2)
         {
             // Get the font size setting
@@ -639,48 +673,48 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
                 return result;
             }
         }
-        
+
         // we won't be able to display all the fonts
         result[0] = textSize;
         result[1] = layoutHeight;
         result[2] = totalTextHeight / layoutHeight;
         return result;
     }
-    
-    
+
+
     @Override
     public void onInitARDone(VuforiaAppException exception)
     {
-        
+
         if (exception == null)
         {
             initApplicationAR();
-            
+
             // Hint to the virtual machine that it would be a good time to
             // run the garbage collector:
             //
             // NOTE: This is only a hint. There is no guarantee that the
             // garbage collector will actually be run.
             System.gc();
-            
+
             // Activate the renderer:
             mRenderer.mIsActive = true;
-            
+
             // Now add the GL surface view. It is important
             // that the OpenGL ES surface view gets added
             // BEFORE the camera is started and video
             // background is configured.
             addContentView(mGlView, new LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.MATCH_PARENT));
-            
+
             // Hides the Loading Dialog
             loadingDialogHandler
                 .sendEmptyMessage(LoadingDialogHandler.HIDE_LOADING_DIALOG);
             showLoupe(true);
-            
+
             // Sets the UILayout to be drawn in front of the camera
             mUILayout.bringToFront();
-            
+
             try
             {
                 vuforiaAppSession.startAR(CameraDevice.CAMERA_DIRECTION.CAMERA_DIRECTION_DEFAULT);
@@ -688,24 +722,24 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
             {
                 Log.e(LOGTAG, e.getString());
             }
-            
+
             mIsVuforiaStarted = true;
-            
+
             postStartCamera();
-            
+
             setSampleAppMenuAdditionalViews();
          /*   mSampleAppMenu = new SampleAppMenu(this, this, "Text Reco",
                 mGlView, mUILayout, mSettingsAdditionalViews);
             setSampleAppMenuSettings();*/
-            
+
         } else
         {
             Log.e(LOGTAG, exception.getString());
             showInitializationErrorMessage(exception.getString());
         }
     }
-    
-    
+
+
     // Shows initialization error messages as System dialogs
     public void showInitializationErrorMessage(String message)
     {
@@ -718,7 +752,7 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
                 {
                     mErrorDialog.dismiss();
                 }
-                
+
                 // Generates an Alert Dialog to show the error message
                 AlertDialog.Builder builder = new AlertDialog.Builder(
                     TextReco.this);
@@ -735,14 +769,14 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
                                 finish();
                             }
                         });
-                
+
                 mErrorDialog = builder.create();
                 mErrorDialog.show();
             }
         });
     }
-    
-    
+
+
     // Functions to load and destroy tracking data.
     @Override
     public boolean doLoadTrackersData()
@@ -877,7 +911,7 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
         mSettingsAdditionalViews = new ArrayList<View>();
         mSettingsAdditionalViews.add(mUILayout.findViewById(R.id.topMargin));
         mSettingsAdditionalViews.add(mUILayout.findViewById(R.id.loupeLayout));
-        mSettingsAdditionalViews.add(mUILayout.findViewById(R.id.wordList));
+      //  mSettingsAdditionalViews.add(mUILayout.findViewById(R.id.wordList));
     }
     
 /*
