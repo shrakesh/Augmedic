@@ -44,6 +44,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.vuforia.CameraDevice;
 import com.vuforia.RectangleInt;
@@ -90,6 +91,8 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
     private boolean mIsTablet = false;
     
     private boolean mIsVuforiaStarted = false;
+
+    private boolean mFlashStatus = false;
     
     private GestureDetector mGestureDetector;
     
@@ -349,8 +352,8 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
             int loupeWidth = screenWidth - (2 * marginWidth);
             
             // definition of the region of interest
-            mRenderer.setROI(screenWidth / 2, marginWidth + (loupeHeight / 2),
-                loupeWidth, loupeHeight);
+            mRenderer.setROI(screenWidth / 2,  (screenHeight * 3 / 5),
+                loupeWidth, loupeHeight*2);
         }
         
         // Get the camera rotation
@@ -565,17 +568,35 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
         
         RelativeLayout loupeLayout = (RelativeLayout) mUILayout
             .findViewById(R.id.loupeLayout);
+
+        RelativeLayout searchLayout = (RelativeLayout) mUILayout
+                .findViewById(R.id.searchLayout);
+
+        final ToggleButton flash_button = (ToggleButton) mUILayout
+                .findViewById(R.id.flash_button);
+
+        // attach an OnClickListener
+        flash_button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mFlashStatus = flash_button.isChecked();
+                CameraDevice.getInstance().setFlashTorchMode(mFlashStatus);
+                // your click actions go here
+            }
+        });
+
+     //   ImageView topMargin = (ImageView) mUILayout
+       //     .findViewById(R.id.topMargin);
         
-        ImageView topMargin = (ImageView) mUILayout
-            .findViewById(R.id.topMargin);
+     //   ImageView leftMargin = (ImageView) mUILayout
+        //    .findViewById(R.id.leftMargin);
         
-        ImageView leftMargin = (ImageView) mUILayout
-            .findViewById(R.id.leftMargin);
+   //     ImageView rightMargin = (ImageView) mUILayout
+         //   .findViewById(R.id.rightMargin);
         
-        ImageView rightMargin = (ImageView) mUILayout
-            .findViewById(R.id.rightMargin);
-        
-        ImageView loupeArea = (ImageView) mUILayout.findViewById(R.id.loupe);
+   //     ImageView loupeArea = (ImageView) mUILayout.findViewById(R.id.loupe);
         
       //  RelativeLayout wordListLayout = (RelativeLayout) mUILayout
       //      .findViewById(R.id.wordList);
@@ -584,25 +605,26 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
         
         if (isActive)
         {
-            topMargin.getLayoutParams().height = marginWidth;
-            topMargin.getLayoutParams().width = width;
+
+        //    topMargin.getLayoutParams().height = marginWidth;
+        //    topMargin.getLayoutParams().width = width;
             
-            leftMargin.getLayoutParams().width = marginWidth;
-            leftMargin.getLayoutParams().height = loupeHeight;
+      //      leftMargin.getLayoutParams().width = marginWidth;
+       //     leftMargin.getLayoutParams().height = loupeHeight;
             
-            rightMargin.getLayoutParams().width = marginWidth;
-            rightMargin.getLayoutParams().height = loupeHeight;
+     //       rightMargin.getLayoutParams().width = marginWidth;
+     //       rightMargin.getLayoutParams().height = loupeHeight;
             
             RelativeLayout.LayoutParams params;
             
-            params = (RelativeLayout.LayoutParams) loupeLayout
-                .getLayoutParams();
-            params.height = loupeHeight;
-            loupeLayout.setLayoutParams(params);
+    //        params = (RelativeLayout.LayoutParams) loupeLayout
+   //             .getLayoutParams();
+     //       params.height = loupeHeight;
+    //        loupeLayout.setLayoutParams(params);
             
-            loupeArea.getLayoutParams().width = loupeWidth;
-            loupeArea.getLayoutParams().height = loupeHeight;
-            loupeArea.setVisibility(View.VISIBLE);
+       //     loupeArea.getLayoutParams().width = loupeWidth;
+      //      loupeArea.getLayoutParams().height = loupeHeight;
+       //     loupeArea.setVisibility(View.VISIBLE);
            /*
             params = (RelativeLayout.LayoutParams) wordListLayout
                 .getLayoutParams();
@@ -611,17 +633,19 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
             wordListLayout.setLayoutParams(params);
             */
             loadingIndicator.setVisibility(View.GONE);
-            loupeArea.setVisibility(View.VISIBLE);
-            topMargin.setVisibility(View.VISIBLE);
-            loupeLayout.setVisibility(View.VISIBLE);
+       //     loupeArea.setVisibility(View.VISIBLE);
+       //     topMargin.setVisibility(View.VISIBLE);
+              loupeLayout.setVisibility(View.VISIBLE);
+              searchLayout.setVisibility(View.VISIBLE);
      //       wordListLayout.setVisibility(View.VISIBLE);
             
         } else
         {
             loadingIndicator.setVisibility(View.VISIBLE);
-            loupeArea.setVisibility(View.GONE);
-            topMargin.setVisibility(View.GONE);
+         //   loupeArea.setVisibility(View.GONE);
+        //    topMargin.setVisibility(View.GONE);
             loupeLayout.setVisibility(View.GONE);
+            searchLayout.setVisibility(View.GONE);
          //   wordListLayout.setVisibility(View.GONE);
         }
 
@@ -909,8 +933,8 @@ public class TextReco extends Activity implements VuforiaAppControl//,SampleAppM
     private void setSampleAppMenuAdditionalViews()
     {
         mSettingsAdditionalViews = new ArrayList<View>();
-        mSettingsAdditionalViews.add(mUILayout.findViewById(R.id.topMargin));
-        mSettingsAdditionalViews.add(mUILayout.findViewById(R.id.loupeLayout));
+     //   mSettingsAdditionalViews.add(mUILayout.findViewById(R.id.topMargin));
+     //   mSettingsAdditionalViews.add(mUILayout.findViewById(R.id.loupeLayout));
       //  mSettingsAdditionalViews.add(mUILayout.findViewById(R.id.wordList));
     }
     

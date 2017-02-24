@@ -1,60 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
+<!--
     <ImageView
         android:id="@+id/topMargin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:scaleType="fitXY"
         android:visibility="invisible"
-        android:src="@drawable/bg70" />
+        android:src="@drawable/bg70"
+        android:layout_alignParentTop="true" />
+-->
 
-    <ProgressBar
-        style="@android:style/Widget.ProgressBar"
-        android:id="@+id/loading_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        />
+    <RelativeLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="match_parent"
+        android:visibility="visible"
+        android:layout_height="200dp"
+        android:background="@android:drawable/screen_background_dark"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:text="@string/enter_medicine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/textView"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:textColor="@android:color/white"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText2"
+            android:textColor="@android:color/white"
+            android:textColorLink="?attr/colorPrimary"
+            android:background="@android:drawable/title_bar"
+            android:clickable="false"
+            android:layout_centerVertical="true"
+            android:layout_alignStart="@+id/textView" />
+
+        <Button
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search"
+            android:id="@+id/button"
+            android:layout_alignBaseline="@+id/editText2"
+            android:layout_alignBottom="@+id/editText2"
+            android:layout_toEndOf="@+id/editText2" />
+
+        <TextView
+            android:text="OR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textView2"
+            android:textColor="@android:color/white"
+            android:textStyle="normal|bold"
+            android:textSize="20sp" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/loupeLayout"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:visibility="invisible"
-        android:layout_below="@+id/topMargin">
+        android:visibility="visible"
+        android:layout_height="200dp"
+        android:background="@drawable/bg00"
+        android:layout_below="@+id/searchLayout"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true">
 
-        <ImageView
-            android:id="@+id/leftMargin"
+        <TextView
+            android:text="Point at Medicine name"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:textColor="@android:color/white"
             android:layout_alignParentTop="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg70" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="33dp" />
 
-        <ImageView
-            android:id="@+id/loupe"
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar"
+            android:id="@+id/loading_indicator"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg00"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/leftMargin" />
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="19dp" />
 
-        <ImageView
-            android:id="@+id/rightMargin"
+        <ToggleButton
+            android:id="@+id/flash_button"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/loupe"
-            android:layout_alignParentTop="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg70" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/check"
+            android:textOn=""
+            android:textOff=""
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="59dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/loading_indicator"
+            android:layout_marginEnd="26dp" />
+
     </RelativeLayout>
 
+
+    <!--
+        <RelativeLayout
+            android:id="@+id/loupeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:visibility="invisible"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true">
+
+            <ImageView
+                android:id="@+id/leftMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg70" />
+
+            <ImageView
+                android:id="@+id/loupe"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg00"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/leftMargin" />
+
+            <ImageView
+                android:id="@+id/rightMargin"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/loupe"
+                android:layout_alignParentTop="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg70" />
+        </RelativeLayout>
+    -->
 </RelativeLayout>

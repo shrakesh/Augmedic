@@ -398,7 +398,7 @@ public class TextRecoRenderer implements GLSurfaceView.Renderer
         GLES20.glEnableVertexAttribArray(vertexHandle);
         
         GLES20.glUniform1f(lineOpacityHandle, 1.0f); // 0.35f);
-        GLES20.glUniform3f(lineColorHandle, 0.0f, 1.0f, 0.0f);// R,G,B
+        GLES20.glUniform3f(lineColorHandle, 0.0f, 1.0f, 1.0f);// R,G,B
         GLES20.glUniformMatrix4fv(mvpMatrixHandle, 1, false, orthProj, 0);
         
         // Then, we issue the render call
